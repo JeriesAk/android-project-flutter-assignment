@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349002467861",
+    "project_id": "hellome-3f1c0",
+    "storage_bucket": "hellome-3f1c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349002467861:android:88c525993dd4be394d1c1c",
+        "android_client_info": {
+          "package_name": "com.technion.android.hello_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349002467861-k5168o8oblt0to556gvadnqjk975sqvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs7aedsoNpzVOBn_j4wdykypwa9O65a5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349002467861-k5168o8oblt0to556gvadnqjk975sqvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
