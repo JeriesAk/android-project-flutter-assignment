@@ -1,16 +1,6 @@
-# flutter_app
-
-A new Flutter application.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Dry questions
+1) SnappingSheetController is the clas that is used to implement the controller logic. It allows the programmer to drag the snapping sheet to a certain position using ".snapToPosition(factor)" method and ".setSnappingSheetPosition(pixels)". It also allows stopping the snapping using ".stopCurrentSnapping()". You can extract information about the snapping sheet from the controller such as "currentPosition", "currentSnappingPosition", "currentlySnapping", "isAttached". Ref https://pub.dev/packages/snapping_sheet#using-the-snappingsheetcontroller
+2) We can add snappingPositions parameter to the SnappingSheet, which is as array of snappingPositions. Each position can define an animation using snappingCurve and snappingDuration parameters. Ref: https://pub.dev/packages/snapping_sheet#customize-snapping-positions
+3) InkWell advantage: Provides the ripple effect on tap (splash animation), while GestureDetector does not.
+GestureDetector advantage: It provides support for more controls such as drag, swipe and more, which InkWell does not provide.
+You can use either of them according to your needs, you want ripple effects go with InkWell, need more controls go with GestureDetector or even combine both of them.
