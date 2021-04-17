@@ -57,6 +57,7 @@ class RandomWords extends StatefulWidget {
 class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18);
+  final _x = <WordPair>[];
 
   FavoritesManager _getFavoritesManager() =>
       Provider.of<FavoritesManager>(context);
@@ -109,8 +110,10 @@ class _RandomWordsState extends State<RandomWords> {
       onTap: () {
         if (alreadySaved) {
           favoritesManager.removeWordPair(pair);
+          _x.remove(pair);
         } else {
           favoritesManager.addWordPair(pair);
+          _x.add(pair);
         }
       },
     );
@@ -156,24 +159,28 @@ class _RandomWordsState extends State<RandomWords> {
     var favoritesManager = Provider.of<FavoritesManager>(context);
 
     if (!isUserLoggedIn) {
-      actionsArray.add(IconButton(
-          icon: Icon(Icons.login),
-          onPressed: _onLoginButtonPress,
-          tooltip: 'Log In'));
-      favoritesManager.disconnectFromCloud();
+      setState(() {
+        actionsArray.add(IconButton(
+            icon: Icon(Icons.login),
+            onPressed: _onLoginButtonPress,
+            tooltip: 'Log In'));
+        favoritesManager.disconnectFromCloud();
+      });
     } else {
-      actionsArray.add(IconButton(
-          icon: Icon(Icons.exit_to_app),
-          onPressed: () => user.signOut(),
-          tooltip: 'Log Out'));
-      favoritesManager.connectToCloud(user.user.email);
+      setState(() {
+        actionsArray.add(IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () => user.signOut(),
+            tooltip: 'Log Out'));
+        favoritesManager.connectToCloud(user.user.email);
+      });
     }
     return Scaffold(
       appBar: AppBar(
         title: Text('Startup Name Generator'),
         actions: actionsArray,
       ),
-      body: ProfileSnappingSheetWrapper(_buildSuggestions())
+      body: ProfileSnappingSheetWrapper(() => _buildSuggestions())
     );
   }
 }

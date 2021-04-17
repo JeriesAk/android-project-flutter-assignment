@@ -24,6 +24,8 @@ class FavoritesManager with ChangeNotifier {
           .toList());
       print('Added word pairs from cloud');
 
+      notifyListeners();
+
       favorites.forEach((element) => _getCollectionReference()
           .doc(element.toString())
           .set({'first': element.first, 'second': element.second}));

@@ -5,7 +5,7 @@ import 'package:snapping_sheet/snapping_sheet.dart';
 import 'dart:ui' as ui;
 
 class ProfileSnappingSheetWrapper extends StatefulWidget {
-  final Widget _body;
+  final Widget Function() _body;
 
   ProfileSnappingSheetWrapper(this._body);
 
@@ -16,7 +16,7 @@ class ProfileSnappingSheetWrapper extends StatefulWidget {
 
 class _ProfileSnappingSheetWrapperState
     extends State<ProfileSnappingSheetWrapper> {
-  final Widget _body;
+  final Widget Function() _body;
   final SnappingSheetController _snappingSheetController =
       SnappingSheetController();
   var _arrowIcon = Icons.keyboard_arrow_up;
@@ -101,12 +101,12 @@ class _ProfileSnappingSheetWrapperState
         },
         child: _isDragged
             ? Stack(children: [
-                _body,
+                _body(),
                 BackdropFilter(
                     filter: ui.ImageFilter.blur(sigmaY: 2.0, sigmaX: 2.0),
                     child: Container(color: Colors.transparent))
               ])
-            : _body,
+            : _body(),
         grabbingHeight: sheetGrabbingHeight,
         controller: _snappingSheetController,
         sheetBelow: SnappingSheetContent(
@@ -127,6 +127,6 @@ class _ProfileSnappingSheetWrapperState
       );
     };
 
-    return userState.isUserLoggedIn() ? snappingSheet() : _body;
+    return userState.isUserLoggedIn() ? snappingSheet() : _body();
   }
 }
