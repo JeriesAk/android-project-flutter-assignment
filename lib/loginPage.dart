@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
           hintText: "Password"),
     );
 
-    final userStatus = Provider.of<UserStatus>(context);
+    final userStatus = Provider.of<UserState>(context);
 
     final buttonIsDisabled = userStatus.status == Status.Authenticating;
 
@@ -96,8 +96,24 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
+    final registerButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Colors.green,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: (){},
+        child: Text("New user? Click to sign up",
+            textAlign: TextAlign.center,
+            style: _style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return Scaffold(
-      body: Center(
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(child: Center(
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -120,11 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 15.0,
                 ),
+                registerButton,
+                SizedBox(height: 15.0)
               ],
             ),
           ),
         ),
       ),
-    );
+    ));
   }
 }

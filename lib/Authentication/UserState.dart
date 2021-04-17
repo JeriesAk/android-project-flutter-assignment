@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
-class UserStatus with ChangeNotifier {
+class UserState with ChangeNotifier {
   FirebaseAuth _auth;
   User _user;
   Status _status = Status.Uninitialized;
 
-  UserStatus.instance() : _auth = FirebaseAuth.instance {
+  UserState.instance() : _auth = FirebaseAuth.instance {
     _auth.authStateChanges().listen(_onAuthStateChanged);
   }
 

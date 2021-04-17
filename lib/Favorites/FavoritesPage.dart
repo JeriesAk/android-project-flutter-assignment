@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_app/SnappingSheets/profileSnappingSheetWrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'FavoritesManager.dart';
@@ -32,11 +33,13 @@ class FavoritesPage extends StatelessWidget {
       tiles: tiles,
     ).toList();
 
+    var favoritesPageBody = ListView(children: divided);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Saved Suggestions'),
       ),
-      body: ListView(children: divided),
+      body: ProfileSnappingSheetWrapper(favoritesPageBody),
     );
   }
 }

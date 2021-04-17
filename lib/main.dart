@@ -7,11 +7,12 @@ import 'package:provider/provider.dart';
 
 import 'Authentication/UserState.dart';
 import 'Favorites/FavoritesManager.dart';
+import 'SnappingSheets/profileSnappingSheetWrapper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => UserStatus.instance()),
+    ChangeNotifierProvider(create: (_) => UserState.instance()),
     ChangeNotifierProvider(create: (_) => FavoritesManager())
   ], child: App()));
 }
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Welcome to Flutter!!!!!',
+        title: 'Welcome to Flutter',
         home: RandomWords(),
         theme: ThemeData(primaryColor: Colors.red));
   }
@@ -142,7 +143,7 @@ class _RandomWordsState extends State<RandomWords> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserStatus>(context);
+    final user = Provider.of<UserState>(context);
     final actionsArray = [
       IconButton(
           icon: Icon(Icons.favorite),
@@ -172,7 +173,7 @@ class _RandomWordsState extends State<RandomWords> {
         title: Text('Startup Name Generator'),
         actions: actionsArray,
       ),
-      body: _buildSuggestions(),
+      body: ProfileSnappingSheetWrapper(_buildSuggestions())
     );
   }
 }

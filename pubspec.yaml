@@ -33,6 +33,7 @@ dependencies:
   firebase_auth: "^1.0.1"
   cloud_firestore: "^1.0.3"
   provider: ^5.0.0
+  snapping_sheet: ^3.0.0+2
 
 dev_dependencies:
   flutter_test:
