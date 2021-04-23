@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final userStatus = Provider.of<UserState>(context);
 
-    final buttonIsDisabled = userStatus.status == Status.Authenticating;
+    final buttonIsDisabled = userStatus.getUserStatus() == Status.Authenticating;
 
     final validateEmailAndPassword = () {
       final isEmailValid = RegExp(
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
           showModalBottomSheet(context: context, builder: (BuildContext context) {
 
             final onWrongPassword = () {
-              final snackBar = SnackBar(content: Text('Passwords do not match. Try again.', textAlign: TextAlign.center, style: _style,));
+              final snackBar = SnackBar(content: Text('Passwords must match.', textAlign: TextAlign.center, style: _style,));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             };
 

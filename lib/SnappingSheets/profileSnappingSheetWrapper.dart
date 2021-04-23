@@ -62,7 +62,7 @@ class _ProfileSnappingSheetWrapperState
     final snappingSheet = () {
       final text = Row(children: [
         Text(
-          'Welcome back ${userState.user.email}',
+          'Welcome back ${userState.getUserEmail()}',
           style: _textStyle,
           textAlign: TextAlign.left,
         ),
@@ -111,7 +111,7 @@ class _ProfileSnappingSheetWrapperState
         grabbingHeight: sheetGrabbingHeight,
         controller: _snappingSheetController,
         sheetBelow: SnappingSheetContent(
-            draggable: true, child: ProfilePage(userState.user.email)),
+            draggable: true, child: ProfilePage(userState.getUserEmail(), userState.getUserProfilePictureUrl())),
         grabbing: GestureDetector(
             onTap: onArrowTap,
             child: Container(

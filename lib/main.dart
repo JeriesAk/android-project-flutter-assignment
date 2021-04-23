@@ -172,7 +172,7 @@ class _RandomWordsState extends State<RandomWords> {
             icon: Icon(Icons.exit_to_app),
             onPressed: () => user.signOut(),
             tooltip: 'Log Out'));
-        favoritesManager.connectToCloud(user.user.email);
+        favoritesManager.connectToCloud(user.getUserEmail());
       });
     }
     return Scaffold(
