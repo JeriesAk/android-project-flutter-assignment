@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication/UserState.dart';
+import 'package:flutter_app/LogInScreen/passwordConfirmModalBottomSheet.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -39,30 +40,37 @@ class _LoginPageState extends State<LoginPage> {
 
     final buttonIsDisabled = userStatus.status == Status.Authenticating;
 
+    final validateEmailAndPassword = () {
+      final isEmailValid = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(_emailTextController.value.text);
+      if (!isEmailValid) {
+        final invalidEmailSnackBar = SnackBar(
+            content: Text(
+              'Invalid email address.',
+              textAlign: TextAlign.center,
+              style: _style,
+            ));
+        ScaffoldMessenger.of(context).showSnackBar(invalidEmailSnackBar);
+        return false;
+      }
+
+      final isPasswordFieldEmpty =
+          _passwordTextController.value.text.length == 0;
+      if (isPasswordFieldEmpty) {
+        final emptyPasswordSnackBar = SnackBar(
+            content: Text('Password must not be empty.',
+                textAlign: TextAlign.center, style: _style));
+        ScaffoldMessenger.of(context).showSnackBar(emptyPasswordSnackBar);
+        return false;
+      }
+       return true;
+    };
+
     final loginButtonOnPressFunction = buttonIsDisabled
         ? null
         : () async {
-            final isEmailValid = RegExp(
-                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                .hasMatch(_emailTextController.value.text);
-            if (!isEmailValid) {
-              final invalidEmailSnackBar = SnackBar(
-                  content: Text(
-                'Invalid email address.',
-                textAlign: TextAlign.center,
-                style: _style,
-              ));
-              ScaffoldMessenger.of(context).showSnackBar(invalidEmailSnackBar);
-              return;
-            }
-
-            final isPasswordFieldEmpty =
-                _passwordTextController.value.text.length == 0;
-            if (isPasswordFieldEmpty) {
-              final emptyPasswordSnackBar = SnackBar(
-                  content: Text('Password must not be empty.',
-                      textAlign: TextAlign.center, style: _style));
-              ScaffoldMessenger.of(context).showSnackBar(emptyPasswordSnackBar);
+            if(validateEmailAndPassword() == false) {
               return;
             }
             final isAuthenticationSuccessful = await userStatus.signIn(
@@ -103,7 +111,27 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: (){},
+        onPressed: (){
+          if( validateEmailAndPassword() == false) {
+            return;
+          }
+          print('pressed');
+          showModalBottomSheet(context: context, builder: (BuildContext context) {
+            final onCorrectPassword = () {
+              print('Correct!');
+            };
+
+            final onWrongPassword = () {
+              final snackBar = SnackBar(content: Text('Passwords do not match. Try again.', textAlign: TextAlign.center, style: _style,));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            };
+
+            final expectedPassword = _passwordTextController.value.text;
+
+            return PasswordConfirmPage(expectedPassword, onCorrectPassword, onWrongPassword);
+
+          });
+        },
         child: Text("New user? Click to sign up",
             textAlign: TextAlign.center,
             style: _style.copyWith(

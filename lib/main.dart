@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_app/Favorites/FavoritesPage.dart';
-import 'package:flutter_app/loginPage.dart';
+import 'file:///C:/Users/jeabukhadra/StudioProjects/android-project-flutter-assignment/lib/LogInScreen/loginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 

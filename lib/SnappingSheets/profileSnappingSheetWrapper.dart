@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication/UserState.dart';
+import 'package:flutter_app/ProfilePage/profilePage.dart';
 import 'package:provider/provider.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'dart:ui' as ui;
@@ -41,7 +42,7 @@ class _ProfileSnappingSheetWrapperState
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     const double sheetGrabbingHeight = 60;
-    const double openSheetPosition = 250.0;
+    const double openSheetPosition = 200.0;
     final closedSheetPosition = sheetGrabbingHeight / 2;
 
     final onArrowTap = () =>
@@ -110,7 +111,7 @@ class _ProfileSnappingSheetWrapperState
         grabbingHeight: sheetGrabbingHeight,
         controller: _snappingSheetController,
         sheetBelow: SnappingSheetContent(
-            draggable: true, child: Container(color: Colors.blue)),
+            draggable: true, child: ProfilePage()),
         grabbing: GestureDetector(
             onTap: onArrowTap,
             child: Container(
