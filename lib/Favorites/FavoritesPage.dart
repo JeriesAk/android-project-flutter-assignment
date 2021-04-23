@@ -38,28 +38,6 @@ class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var favoritesManager = Provider.of<FavoritesManager>(context);
-    final tiles = _favoritePairs.map(
-      (WordPair pair) {
-        return ListTile(
-          title: Text(
-            pair.asPascalCase,
-            style: const TextStyle(fontSize: 18),
-          ),
-          trailing: IconButton(
-            icon: Icon(Icons.delete_outline_rounded),
-            onPressed: () {
-              favoritesManager.removeWordPair(pair);
-            },
-          ),
-        );
-      },
-    );
-    final divided = ListTile.divideTiles(
-      context: context,
-      tiles: tiles,
-    ).toList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Saved Suggestions'),
