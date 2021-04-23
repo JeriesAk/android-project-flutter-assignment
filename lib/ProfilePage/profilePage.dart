@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
+  final String _title;
+  ProfilePage(this._title);
+
   @override
   Widget build(BuildContext context) {
     final avatar = CircleAvatar(backgroundColor: Colors.blue, radius: 50.0);
-    final name = Text('jeries.abu.khadra@gmail.com', style: TextStyle(fontSize: 18.0));
+    final name = Text('$_title', style: TextStyle(fontSize: 18.0));
     const changeAvatarButton = Material(
         elevation: 5.0,
         color: Colors.teal,

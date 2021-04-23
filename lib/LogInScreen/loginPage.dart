@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Authentication/UserState.dart';
-import 'package:flutter_app/LogInScreen/passwordConfirmModalBottomSheet.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,9 +11,10 @@ class _LoginPageState extends State<LoginPage> {
   final _style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-
+  final _confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final exitPage = () => Navigator.of(context).pop();
     final description = Text(
         'Welcome to Startup Names Generator. Please log in below.',
         style: _style);
@@ -57,11 +57,21 @@ class _LoginPageState extends State<LoginPage> {
 
       final isPasswordFieldEmpty =
           _passwordTextController.value.text.length == 0;
+
+      final passwordLengthError = _passwordTextController.value.text.length < 6;
       if (isPasswordFieldEmpty) {
         final emptyPasswordSnackBar = SnackBar(
             content: Text('Password must not be empty.',
                 textAlign: TextAlign.center, style: _style));
         ScaffoldMessenger.of(context).showSnackBar(emptyPasswordSnackBar);
+        return false;
+      }
+
+      if(passwordLengthError) {
+        final shortPasswordSnackBar = SnackBar(
+            content: Text('Password must be at least 6 characters long.',
+                textAlign: TextAlign.center, style: _style));
+        ScaffoldMessenger.of(context).showSnackBar(shortPasswordSnackBar);
         return false;
       }
        return true;
@@ -104,6 +114,12 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
+    final onCorrectPassword = () async {
+      final email = _emailTextController.value.text;
+      final password = _passwordTextController.value.text;
+      await userStatus.registerUser(email, password);
+    };
+
     final registerButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -115,21 +131,51 @@ class _LoginPageState extends State<LoginPage> {
           if( validateEmailAndPassword() == false) {
             return;
           }
-          print('pressed');
           showModalBottomSheet(context: context, builder: (BuildContext context) {
-            final onCorrectPassword = () {
-              print('Correct!');
-            };
 
             final onWrongPassword = () {
               final snackBar = SnackBar(content: Text('Passwords do not match. Try again.', textAlign: TextAlign.center, style: _style,));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             };
 
-            final expectedPassword = _passwordTextController.value.text;
+            final title = Text('Please confirm your password below:', style: _style);
 
-            return PasswordConfirmPage(expectedPassword, onCorrectPassword, onWrongPassword);
+            final passwordField = TextField(
+              obscureText: true,
+              style: _style,
+              controller: _confirmPasswordController,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  hintText: "Password"),
+            );
 
+            final confirmButton = Material(
+                elevation: 5.0,
+                color: Colors.teal,
+                child: MaterialButton(
+                  padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                  child: Text(
+                    "Confirm",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  onPressed: () async {
+                    if (_confirmPasswordController.value.text == _passwordTextController.value.text) {
+                      await onCorrectPassword();
+                    } else {
+                      onWrongPassword();
+                    }
+
+                    Navigator.pop(context);
+                    exitPage();
+                  },
+                ));
+
+            return Container(
+                child: Center(
+                    child: Column(
+                        children: <Widget>[title, passwordField, confirmButton],
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly)));
           });
         },
         child: Text("New user? Click to sign up",

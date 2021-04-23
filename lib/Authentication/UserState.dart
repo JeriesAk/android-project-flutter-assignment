@@ -19,6 +19,10 @@ class UserState with ChangeNotifier {
     return _status == Status.Authenticated;
   }
 
+  Future<void> registerUser(String email, String password) async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+  }
+
   Future<bool> signIn(String email, String password) async {
     try {
       _status = Status.Authenticating;

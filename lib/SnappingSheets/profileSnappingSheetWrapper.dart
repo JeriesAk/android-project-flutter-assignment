@@ -111,7 +111,7 @@ class _ProfileSnappingSheetWrapperState
         grabbingHeight: sheetGrabbingHeight,
         controller: _snappingSheetController,
         sheetBelow: SnappingSheetContent(
-            draggable: true, child: ProfilePage()),
+            draggable: true, child: ProfilePage(userState.user.email)),
         grabbing: GestureDetector(
             onTap: onArrowTap,
             child: Container(

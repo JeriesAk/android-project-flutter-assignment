@@ -60,8 +60,6 @@ class FavoritesPage extends StatelessWidget {
       tiles: tiles,
     ).toList();
 
-    var favoritesPageBody = ListView(children: divided);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Saved Suggestions'),
