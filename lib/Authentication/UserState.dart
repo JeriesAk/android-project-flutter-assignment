@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
@@ -59,9 +58,8 @@ class UserState with ChangeNotifier {
   Future<void> updateProfilePic(File imageFile) async {
     _profilePicture = FileImage(File(imageFile.path));
     notifyListeners();
-    String fileName = basename(imageFile.path);
     var firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('uploads/$fileName');
+        FirebaseStorage.instance.ref().child('profilePics/${_user.uid}');
     var uploadTask = firebaseStorageRef.putFile(imageFile);
     var taskSnapshot = await uploadTask;
     await taskSnapshot.ref.getDownloadURL().then(
